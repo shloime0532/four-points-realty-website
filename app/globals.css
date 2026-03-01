@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #2C1810;
+  --primary-light: #3D2518;
+  --accent: #C9A962;
+  --accent-light: #D4B87A;
+  --light: #FAF7F2;
+  --text: #2C1810;
+  --text-light: #6B5B4E;
+  --background: #ffffff;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-light: var(--light);
+  --color-text: var(--text);
+  --color-text-light: var(--text-light);
+  --color-bg: var(--background);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-playfair);
+}
+
+html {
+  scroll-padding-top: 80px;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Fade-up animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered delays */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+
+/* Masonry hover overlay */
+.masonry-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.masonry-item img {
+  transition: transform 0.5s ease;
+}
+
+.masonry-item:hover img {
+  transform: scale(1.05);
+}
+
+.masonry-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(44, 24, 16, 0.85) 0%, rgba(44, 24, 16, 0.3) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+
+.masonry-item:hover .masonry-overlay {
+  opacity: 1;
+}
+
+/* Stat counter animation */
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Smooth nav background transition */
+.nav-transparent {
+  background: transparent;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-scrolled {
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 1px 3px rgba(44, 24, 16, 0.1);
+}
+
+/* Star rating */
+.star {
+  color: #C9A962;
+}
+
+/* Gold gradient text */
+.gold-text {
+  background: linear-gradient(135deg, #C9A962, #D4B87A, #C9A962);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
