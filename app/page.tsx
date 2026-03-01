@@ -20,7 +20,7 @@ const PROPERTIES = [
     label: "Colonial Estate",
     details: "4 Bed  |  3 Bath  |  2,800 sqft",
     price: "$549,000",
-    span: "row-span-2",
+    span: "sm:row-span-2",
   },
   {
     src: "/images/property-2.png",
@@ -44,7 +44,7 @@ const PROPERTIES = [
     label: "Grand Living Room",
     details: "Vaulted Ceilings  |  Fireplace  |  Hardwood",
     price: "",
-    span: "row-span-2",
+    span: "sm:row-span-2",
   },
   {
     src: "/images/property-5.png",
@@ -115,7 +115,7 @@ const TESTIMONIALS = [
     name: "Yehuda K.",
     role: "Home Seller",
     stars: 5,
-    text: "We listed with Four Points and had a full-price offer within 10 days. Their marketing was outstanding -- professional photography, targeted outreach, and they kept us informed every step of the way. Truly a white-glove experience from start to finish.",
+    text: "We listed with Four Points and had a full-price offer within 10 days. Their marketing was outstanding —professional photography, targeted outreach, and they kept us informed every step of the way. Truly a white-glove experience from start to finish.",
   },
   {
     name: "Sarah L.",
@@ -320,8 +320,8 @@ function Hero() {
           <span className="gold-text">Real Estate Experts</span>
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-white/80 md:text-xl">
-          Guiding families and investors through every milestone -- from first homes to luxury
-          estates -- with integrity, local expertise, and results that speak for themselves.
+          Guiding families and investors through every milestone —from first homes to luxury
+          estates —with integrity, local expertise, and results that speak for themselves.
         </p>
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <a
@@ -479,8 +479,8 @@ function About() {
               perfect homes.
             </p>
             <p className="mb-5 leading-relaxed text-text-light">
-              Our team of dedicated agents -- including David Holtz, Tzvi (Steve) Holtz, Charles
-              Klein, and Simcha Salomon -- brings diverse specialties spanning residential sales,
+              Our team of dedicated agents —including David Holtz, Tzvi (Steve) Holtz, Charles
+              Klein, and Simcha Salomon —brings diverse specialties spanning residential sales,
               luxury properties, investment analysis, and new developments across Ocean County.
             </p>
             <p className="mb-8 leading-relaxed text-text-light">
