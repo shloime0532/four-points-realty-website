@@ -131,6 +131,55 @@ const TESTIMONIALS = [
   },
 ];
 
+/* ─── FADE-UP COMPONENT ─────────────────────────────── */
+
+function FadeUp({
+  children,
+  className = "",
+  delay = 0,
+  as: Tag = "div",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+  as?: React.ElementType;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <Tag
+      ref={ref}
+      className={`${className} transition-all duration-700 ease-out ${
+        visible
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-8"
+      }`}
+      style={{ transitionDelay: delay ? `${delay}ms` : undefined }}
+    >
+      {children}
+    </Tag>
+  );
+}
+
 /* ─── COMPONENTS ────────────────────────────────────── */
 
 function Nav() {
@@ -306,26 +355,30 @@ function Gallery() {
   return (
     <section id="properties" className="bg-light py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="fade-up mb-4 text-center">
+        <FadeUp className="mb-4 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">
             Featured Listings
           </p>
-        </div>
-        <h2 className="fade-up mb-4 text-center font-heading text-3xl font-bold text-primary md:text-4xl lg:text-5xl">
-          Discover Your Dream Home
-        </h2>
-        <p className="fade-up mx-auto mb-14 max-w-2xl text-center text-text-light md:text-lg">
-          Explore our curated selection of exceptional properties across Lakewood and surrounding
-          communities.
-        </p>
+        </FadeUp>
+        <FadeUp className="mb-4 text-center">
+          <h2 className="font-heading text-3xl font-bold text-primary md:text-4xl lg:text-5xl">
+            Discover Your Dream Home
+          </h2>
+        </FadeUp>
+        <FadeUp className="mx-auto mb-14 max-w-2xl text-center">
+          <p className="text-text-light md:text-lg">
+            Explore our curated selection of exceptional properties across Lakewood and surrounding
+            communities.
+          </p>
+        </FadeUp>
 
         {/* Masonry Grid */}
         <div className="grid auto-rows-[240px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[280px]">
           {PROPERTIES.map((p, i) => (
-            <div
+            <FadeUp
               key={i}
-              className={`fade-up masonry-item ${p.span} cursor-pointer`}
-              style={{ transitionDelay: `${i * 80}ms` }}
+              className={`masonry-item ${p.span} cursor-pointer`}
+              delay={i * 80}
             >
               <Image
                 src={p.src}
@@ -341,11 +394,11 @@ function Gallery() {
                 <span className="text-lg font-semibold text-white">{p.label}</span>
                 <span className="text-sm text-white/80">{p.details}</span>
               </div>
-            </div>
+            </FadeUp>
           ))}
         </div>
 
-        <div className="fade-up mt-12 text-center">
+        <FadeUp className="mt-12 text-center">
           <a
             href="tel:7329877722"
             className="inline-flex items-center gap-2 rounded-full border-2 border-primary px-8 py-3.5 text-base font-semibold text-primary transition-all hover:bg-primary hover:text-white"
@@ -355,7 +408,7 @@ function Gallery() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
-        </div>
+        </FadeUp>
       </div>
     </section>
   );
@@ -365,25 +418,29 @@ function Services() {
   return (
     <section id="services" className="bg-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="fade-up mb-4 text-center">
+        <FadeUp className="mb-4 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">
             What We Do
           </p>
-        </div>
-        <h2 className="fade-up mb-4 text-center font-heading text-3xl font-bold text-primary md:text-4xl lg:text-5xl">
-          Full-Service Real Estate
-        </h2>
-        <p className="fade-up mx-auto mb-14 max-w-2xl text-center text-text-light md:text-lg">
-          From your first viewing to the closing table, our team delivers personalized guidance
-          backed by deep Lakewood market knowledge.
-        </p>
+        </FadeUp>
+        <FadeUp className="mb-4 text-center">
+          <h2 className="font-heading text-3xl font-bold text-primary md:text-4xl lg:text-5xl">
+            Full-Service Real Estate
+          </h2>
+        </FadeUp>
+        <FadeUp className="mx-auto mb-14 max-w-2xl text-center">
+          <p className="text-text-light md:text-lg">
+            From your first viewing to the closing table, our team delivers personalized guidance
+            backed by deep Lakewood market knowledge.
+          </p>
+        </FadeUp>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s, i) => (
-            <div
+            <FadeUp
               key={i}
-              className="fade-up group rounded-2xl border border-light bg-light/50 p-8 transition-all hover:border-accent/30 hover:bg-white hover:shadow-lg"
-              style={{ transitionDelay: `${i * 80}ms` }}
+              className="group rounded-2xl border border-light bg-light/50 p-8 hover:border-accent/30 hover:bg-white hover:shadow-lg"
+              delay={i * 80}
             >
               <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors group-hover:bg-accent group-hover:text-white">
                 <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -392,7 +449,7 @@ function Services() {
               </div>
               <h3 className="mb-3 text-xl font-bold text-primary">{s.title}</h3>
               <p className="leading-relaxed text-text-light">{s.desc}</p>
-            </div>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -406,7 +463,7 @@ function About() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           {/* Text */}
-          <div className="fade-up">
+          <FadeUp>
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
               About Us
             </p>
@@ -446,10 +503,10 @@ function About() {
                 Visit Our Office
               </a>
             </div>
-          </div>
+          </FadeUp>
 
           {/* Image */}
-          <div className="fade-up delay-200 relative">
+          <FadeUp className="relative" delay={200}>
             <div className="relative overflow-hidden rounded-2xl shadow-2xl">
               <Image
                 src="/images/about.png"
@@ -464,7 +521,7 @@ function About() {
               <p className="text-3xl font-bold text-accent">15+</p>
               <p className="text-sm font-medium text-white/80">Years Serving<br />Lakewood</p>
             </div>
-          </div>
+          </FadeUp>
         </div>
       </div>
     </section>
@@ -477,12 +534,12 @@ function StatBar() {
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-4">
           {STATS.map((s, i) => (
-            <div key={i} className="fade-up text-center" style={{ transitionDelay: `${i * 100}ms` }}>
+            <FadeUp key={i} className="text-center" delay={i * 100}>
               <p className="text-3xl font-bold text-accent md:text-4xl lg:text-5xl">{s.value}</p>
               <p className="mt-2 text-sm font-medium tracking-wide text-white/70 md:text-base">
                 {s.label}
               </p>
-            </div>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -494,24 +551,28 @@ function Testimonials() {
   return (
     <section id="testimonials" className="bg-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="fade-up mb-4 text-center">
+        <FadeUp className="mb-4 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">
             Testimonials
           </p>
-        </div>
-        <h2 className="fade-up mb-4 text-center font-heading text-3xl font-bold text-primary md:text-4xl lg:text-5xl">
-          What Our Clients Say
-        </h2>
-        <p className="fade-up mx-auto mb-14 max-w-2xl text-center text-text-light md:text-lg">
-          Our 5-star reputation is built on genuine relationships and real results.
-        </p>
+        </FadeUp>
+        <FadeUp className="mb-4 text-center">
+          <h2 className="font-heading text-3xl font-bold text-primary md:text-4xl lg:text-5xl">
+            What Our Clients Say
+          </h2>
+        </FadeUp>
+        <FadeUp className="mx-auto mb-14 max-w-2xl text-center">
+          <p className="text-text-light md:text-lg">
+            Our 5-star reputation is built on genuine relationships and real results.
+          </p>
+        </FadeUp>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {TESTIMONIALS.map((t, i) => (
-            <div
+            <FadeUp
               key={i}
-              className="fade-up flex flex-col rounded-2xl border border-light bg-light/50 p-7 transition-all hover:shadow-lg"
-              style={{ transitionDelay: `${i * 80}ms` }}
+              className="flex flex-col rounded-2xl border border-light bg-light/50 p-7 hover:shadow-lg"
+              delay={i * 80}
             >
               {/* Stars */}
               <div className="mb-4 flex gap-1">
@@ -530,7 +591,7 @@ function Testimonials() {
                 <p className="font-semibold text-primary">{t.name}</p>
                 <p className="text-sm text-text-light">{t.role}</p>
               </div>
-            </div>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -557,14 +618,18 @@ function CTA() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-3xl px-5 text-center lg:px-8">
-        <h2 className="fade-up font-heading text-3xl font-bold text-white md:text-4xl lg:text-5xl">
-          Ready to Make Your Move?
-        </h2>
-        <p className="fade-up mx-auto mt-5 max-w-xl text-lg text-white/75">
-          Whether you&apos;re buying, selling, or investing, our team is here to guide you
-          every step of the way. Let&apos;s start the conversation.
-        </p>
-        <div className="fade-up mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <FadeUp>
+          <h2 className="font-heading text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+            Ready to Make Your Move?
+          </h2>
+        </FadeUp>
+        <FadeUp>
+          <p className="mx-auto mt-5 max-w-xl text-lg text-white/75">
+            Whether you&apos;re buying, selling, or investing, our team is here to guide you
+            every step of the way. Let&apos;s start the conversation.
+          </p>
+        </FadeUp>
+        <FadeUp className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <a
             href="tel:7329877722"
             className="w-full rounded-full bg-accent px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:bg-accent-light hover:shadow-xl sm:w-auto"
@@ -577,8 +642,8 @@ function CTA() {
           >
             Send Us an Email
           </a>
-        </div>
-        <div className="fade-up mt-10 flex flex-col items-center gap-6 text-white/60 sm:flex-row sm:justify-center sm:gap-10">
+        </FadeUp>
+        <FadeUp className="mt-10 flex flex-col items-center gap-6 text-white/60 sm:flex-row sm:justify-center sm:gap-10">
           <div className="flex items-center gap-2">
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -592,7 +657,7 @@ function CTA() {
             </svg>
             <span className="text-sm">Mon-Thu 9-6 &bull; Fri 9-1 &bull; Sun by appt</span>
           </div>
-        </div>
+        </FadeUp>
       </div>
     </section>
   );
@@ -670,32 +735,9 @@ function Footer() {
   );
 }
 
-/* ─── FADE-UP OBSERVER ──────────────────────────────── */
-
-function useFadeUp() {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-
-    document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-}
-
 /* ─── MAIN PAGE ─────────────────────────────────────── */
 
 export default function Home() {
-  useFadeUp();
-
   return (
     <>
       <Nav />
